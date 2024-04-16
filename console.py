@@ -1,6 +1,11 @@
 #!/usr/bin/python3
 """ Console Module """
+
 import cmd
+import re
+import os
+import uuid
+from datetime import datetime
 import sys
 from models.base_model import BaseModel
 from models.__init__ import storage
