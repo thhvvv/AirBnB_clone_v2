@@ -1,22 +1,23 @@
 #!/usr/bin/python3
-""" Script defines "Amenity "class based on the storage type specified in the environment variable """
-import models
-from models.base_model import BaseModel, Base
-from os import getenv
-import sqlalchemy
-from sqlalchemy import Column, String
+"""Defines the Amenity class."""
+from models.base_model import Base
+from models.base_model import BaseModel
+from sqlalchemy import Column
+from sqlalchemy import String
 from sqlalchemy.orm import relationship
 
 
 class Amenity(BaseModel, Base):
-    """ amenity class inherits from basemodel and base and storage type is set to 'db' if not then 'tablename' is simply an empty string """
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
-        __tablename__ = 'amenities'
-        name = Column(String(128),
-                      nullable=False)
-    else:
-        name = ""
+    """Represents an Amenity for a MySQL database.
 
-    def __init__(self, *args, **kwargs):
-        """initializes an instance of amenity class, calls the parent class 'basemodel' with any provided *args and *kwargs"""
-        super().__init__(*args, **kwargs)
+    Inherits from SQLAlchemy Base and links to the MySQL table amenities.
+
+    Attributes:
+        __tablename__ (str): The name of the MySQL table to store Amenities.
+        name (sqlalchemy String): The amenity name.
+        place_amenities (sqlalchemy relationship): Place-Amenity relationship.
+    """
+    __tablename__ = "amenities"
+    name = Column(String(128), nullable=False)
+    place_amenities = relationship("Place", secondary="place_amenity",
+                                   viewonly=False)
