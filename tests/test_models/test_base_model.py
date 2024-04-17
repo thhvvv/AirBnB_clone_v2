@@ -1,12 +1,13 @@
 #!/usr/bin/python3
 """ """
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 import unittest
-import datetime
+from datetime import datetime
 from uuid import UUID
 import json
 import os
-
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                 'basemodel test not supported')
 
 class test_basemodel(unittest.TestCase):
     """ """
@@ -24,13 +25,22 @@ class test_basemodel(unittest.TestCase):
     def tearDown(self):
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_default(self):
         """ """
         i = self.value()
         self.assertEqual(type(i), self.value)
+
+     def test_init(self):
+        """Tests the initialization of the model class.
+        """
+        self.assertIsInstance(self.value(), BaseModel)
+        if self.value is not BaseModel:
+            self.assertIsInstance(self.value(), Base)
+        else:
+            self.assertNotIsInstance(self.value(), Base)
 
     def test_kwargs(self):
         """ """
