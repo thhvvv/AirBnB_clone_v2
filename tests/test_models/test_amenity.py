@@ -1,21 +1,25 @@
 #!/usr/bin/python3
-"""Script to test the Amenity class """
+"""Module that tests the Amenity model."""
+
 from tests.test_models.test_base_model import test_basemodel
 from models.amenity import Amenity
-import os
+
 
 class test_Amenity(test_basemodel):
-    """This class inherits from test_basemodel class """
+    """Test class for the Amenity model."""
 
     def __init__(self, *args, **kwargs):
-        """The constructor ('__init__') of tets_amenity calls the superclass constructor """
+        """Initialize the test class."""
         super().__init__(*args, **kwargs)
         self.name = "Amenity"
         self.value = Amenity
 
     def test_name2(self):
-        """the test cases """
+        """
+        Test case to check the data type of the 'name' attribute.
+
+        Creates a new instance of the Amenity class and asserts that
+        the type of the 'name' attribute is a string.
+        """
         new = self.value()
-        self.assertEqual(type(new.name), str if
-                os.getenv('HBNB_TYPE_STORAGE') != 'db' else
-                type(None))
+        self.assertEqual(type(new.name), str)
